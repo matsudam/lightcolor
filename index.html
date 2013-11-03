@@ -1,0 +1,159 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" id="sixapart-standard">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" href="./css/style.css" type="text/css" />
+
+	<title>灯色識別検査（練習）</title>
+</head>
+
+<script language="JavaScript"><!--
+myImageCnt = 3;                           // 画像の数
+myImage = new Array(                      // 画像ファイル名の設定
+ "images/color_0.png",
+ "images/color_1.png",
+ "images/color_2.png"
+);
+myImageShoto = "images/color.png";
+myCnt = 0;                                // 回答カウント
+
+myColor = new Array(3);                   // 表示した色の配列
+myAnswer = new Array(3);                  // ユーザの回答の配列
+
+myColorList = new Array("白","赤","緑");   // 色
+
+/* クリア処理 */
+function myClear(){                             // ボタンが押された
+  myCnt = 0;                                    // 回答カウント
+  myImageCnt = 3;                               // 画像の数
+  myImage[0] =  "images/color_0.png";
+  myImage[1] =  "images/color_1.png";
+  myImage[2] =  "images/color_2.png";
+
+  for(i=0; i<myImageCnt; i++){
+    var colorObj=document.getElementById("color" + i);
+    colorObj.innerHTML = "　";
+
+    var answerObj=document.getElementById("answer" + i);
+    answerObj.innerHTML = "　";
+  }
+
+
+  myRnd = Math.floor(Math.random()*myImageCnt); // 0〜(myImageCnt-1)の乱数を求める
+  document.myFormImg.src = myImage[myRnd];      // 乱数番目の画像を表示する
+
+  myColor[0] = myRnd;                           // 表示した色
+}
+
+/* 色指定処理 */
+function myChange(n){                            // ボタンが押された
+  myAnswer[myCnt] = n;                           // 回答
+
+  if(myCnt < myImageCnt - 1){
+    var answerObj=document.getElementById("answer" + myCnt);
+    answerObj.innerHTML = myColorList[myAnswer[myCnt]];
+
+    myCnt++;
+    ng=1;
+    while(ng == 1){
+      myRnd = Math.floor(Math.random()*myImageCnt); // 0〜(myImageCnt-1)の乱数を求める
+
+      ng = 0;
+      for(i=0; i < myCnt; i++){
+        if(myRnd == myColor[i]) ng = 1;
+      }
+    }
+
+    document.myFormImg.src = myImage[myRnd];      // 乱数番目の画像を表示する
+
+    myColor[myCnt] = myRnd;                       // 表示した色
+
+  } else {
+    document.myFormImg.src = myImageShoto;       // 乱数番目の画像を表示する
+
+    var answerObj=document.getElementById("answer" + myCnt);
+    answerObj.innerHTML = myColorList[myAnswer[myCnt]];
+
+	for(i=0; i<myImageCnt; i++){
+      var colorObj=document.getElementById("color" + i);
+      colorObj.innerHTML = myColorList[myColor[i]];
+    }
+
+  }
+}
+// --></script>
+
+<body>
+
+<!-- GoogleAnalytics-Start -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-28045860-2', 'hanak.in');
+  ga('send', 'pageview');
+</script>
+<!-- GoogleAnalytics-end -->
+
+<div id="content">
+
+<h1>灯色識別検査（練習）</h1>
+<p>
+このサイトは小型船舶免許試験で行われる色覚検査の予行練習として利用ください。
+</p>
+<p>
+<form>
+<img src="images/color.png" border="0" name="myFormImg"><br />
+<input type="button" value="開始" onclick="myClear()">
+<input type="button" value="白" onclick="myChange(0)">
+<input type="button" value="赤" onclick="myChange(1)">
+<input type="button" value="緑" onclick="myChange(2)">
+</form>
+</p>
+<p>
+<table id="table-02">
+  <tr>
+    <th></th>
+    <th>1回目</th>
+    <th>2回目</th>
+    <th>3回目</th>
+  </tr>
+  <tr>
+    <td><strong>回答</strong></td>
+    <td><p class="table_p" id="answer0">　</p></td>
+    <td><p class="table_p" id="answer1">　</p></td>
+    <td><p class="table_p" id="answer2">　</p></td>
+  </tr>
+  <tr>
+    <td><strong>正解</strong></td>
+    <td><p class="table_p" id="color0">　</p></td>
+    <td><p class="table_p" id="color1">　</p></td>
+    <td><p class="table_p" id="color2">　</p></td>
+  </tr>
+</table>
+</p>
+<div id="account">
+<strong>【使い方】</strong><br />
+初期表示の状態が「無点灯」の状態です。
+「開始」ボタンを押すと「白」「赤」「緑」の中のどれか1色が中央に点灯しますので、「白」「赤」「緑」のボタンで回答してください。<br />
+回答すると次の色が点灯しますので続けて回答してください。<br />
+3回分回答し終わると無点灯の状態に戻り、正解を表示するのでご自身の回答の答え合わせができます。<br />
+<br />
+点灯の画像は<a href="http://www.jmra.or.jp/" target="_blank">財団法人 日本海洋レジャー安全・振興協会</a>のサイトから拝借しました。<br />
+小型船舶免許の色覚検査については、こちらに詳しく載っていますのでご確認ください。<br />
+<br />
+⇒ <a href="http://www.jmra.or.jp/modules/tinyd4/" target="_blank">身体適性相談コーナーについて</a>（財団法人 日本海洋レジャー安全・振興協会）<br />
+</div>
+
+<div id="footer">
+<hr>
+Copyright(C) 2010 <a href="http://matsudam.com" target="_blank">matsudam</a> All Right Reserved.
+</div>
+
+</div>
+
+</body>
+</html>
